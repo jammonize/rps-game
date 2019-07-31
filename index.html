@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+  <script>
+
+      function computerPlay() {
+          let rps = ["rock", "paper", "scissors"];
+          let rand = Math.floor(Math.random() * 3);
+          return rps[rand];
+      }
+
+      function playRound(playerSelection, computerSelection) {
+          let ps = playerSelection.toLowerCase();
+          let cs = computerSelection.toLowerCase();
+          if (ps === cs) {
+              return ("It's a draw! " + ps + " = " + cs)
+          } else if ((ps==="rock" && cs==="scissors") || (ps==="scissors" && cs==="paper") || (ps==="paper" && cs==="rock")) {
+              return ("You win!! " + ps + " beats " + cs)
+          } else {
+              return ("You lose :( " + cs + " beats " + ps)
+          }
+      }
+
+      function game() {
+          const computerSelection = computerPlay()
+          while (true) {
+              ans = prompt("Rock, paper, scissors?")
+              ans = ans.toLowerCase();
+              if (ans === 'rock' || ans === 'paper' || ans === 'scissors') {
+                  break;
+              }
+              console.log("Invalid selection! Rock, paper, or scissors?");
+          }
+          let playerSelection = ans
+          console.log(playRound(playerSelection, computerSelection));
+      }
+
+      let maxGames = 5;
+      
+      while (maxGames > -1) {
+          game();
+          maxGames -= 1;
+      }
+
+  </script>
+</body>
+</html>
