@@ -4,47 +4,59 @@
     <title></title>
 </head>
 <body>
+    <div class="gametitle">
+        <h1 id="gameover">Rock, Paper, Scissors -- BATTLE!</h1>
+    </div>
+    <p>Make your choice!</p>
+    <div class="buttons">
+      <button id="rock">Rock</button>
+      <button id="scissors">Scissors</button>
+      <button id="paper">Paper</button>
+    </div>
+
+    <p id="status">*game status*</p>
+    <p id="won">Player score: 0</p>
+    <p id="lost">Computer score: 0</p>
+
   <script>
+        function computerPlay() {
+            let rps = ["rock", "paper", "scissors"];
+            let rand = Math.floor(Math.random() * 3);
+            return rps[rand];
+        }
 
-      function computerPlay() {
-          let rps = ["rock", "paper", "scissors"];
-          let rand = Math.floor(Math.random() * 3);
-          return rps[rand];
-      }
+        function playRound(playerSelection, computerSelection) {
+            let ps = playerSelection.toLowerCase();
+            let cs = computerSelection.toLowerCase();
+            if (ps === cs) {
+                return ("It's a draw! " + ps + " = " + cs)
+            } else if ((ps==="rock" && cs==="scissors") || (ps==="scissors" && cs==="paper") || (ps==="paper" && cs==="rock")) {
+                gamesWon++;
+                document.getElementById("won").innerHTML = ("Player score: " + gamesWon)
+                return ("You win!! " + ps + " beats " + cs)
+            } else {
+                gamesLost++;
+                document.getElementById("lost").innerHTML = ("Computer score: " + gamesLost)
+                return ("You lose :( " + cs + " beats " + ps)
+           }
+        }
 
-      function playRound(playerSelection, computerSelection) {
-          let ps = playerSelection.toLowerCase();
-          let cs = computerSelection.toLowerCase();
-          if (ps === cs) {
-              return ("It's a draw! " + ps + " = " + cs)
-          } else if ((ps==="rock" && cs==="scissors") || (ps==="scissors" && cs==="paper") || (ps==="paper" && cs==="rock")) {
-              return ("You win!! " + ps + " beats " + cs)
-          } else {
-              return ("You lose :( " + cs + " beats " + ps)
-          }
-      }
+        function game(playerSelection) {
+           const computerSelection = computerPlay();
+           document.getElementById("status").innerHTML = playRound(playerSelection, computerSelection);
+        }
 
-      function game() {
-          const computerSelection = computerPlay()
-          while (true) {
-              ans = prompt("Rock, paper, scissors?")
-              ans = ans.toLowerCase();
-              if (ans === 'rock' || ans === 'paper' || ans === 'scissors') {
-                  break;
-              }
-              console.log("Invalid selection! Rock, paper, or scissors?");
-          }
-          let playerSelection = ans
-          console.log(playRound(playerSelection, computerSelection));
-      }
-
-      let maxGames = 5;
-      
-      while (maxGames > -1) {
-          game();
-          maxGames -= 1;
-      }
-
+        let gamesWon = 0;
+        let gamesLost = 0;
+        
+        document.addEventListener('click', function (e) {
+            const playerSelection = event.target.id;
+            if (gamesWon < 5 && gamesLost < 5) {
+                game(playerSelection);
+            } else { document.getElementById("gameover").innerHTML = "Rock, Paper, Scissors -- GAME OVER!"
+            }
+        });
+  
   </script>
 </body>
 </html>
